@@ -1,966 +1,594 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
-        }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>低碳骑行 · 亲近自然 | Eco Ride</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: #f5f9f0;
+      color: #1a2e1a;
+      overflow-x: hidden;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ---------- 头部 & 语言切换 ---------- */
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(30, 60, 20, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(120, 160, 100, 0.2);
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 0.75rem;
+      background: #e9f2e0;
+      padding: 0.3rem;
+      border-radius: 40px;
+      border: 1px solid #bdd6b0;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #2d4a2d;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: #2e7d32;
+      color: white;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .lang-btn:hover:not(.active) {
+      background: #d4e8cb;
+      transform: scale(0.97);
+    }
+
+    /* ---------- 水平滚动区域 (卡片容器) ---------- */
+    .scroll-horizontal {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 2rem 1.5rem 1.2rem 1.5rem;
+      gap: 2rem;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #a5c9a0 #e2f0db;
+    }
+
+    .scroll-horizontal::-webkit-scrollbar {
+      height: 8px;
+    }
+    .scroll-horizontal::-webkit-scrollbar-track {
+      background: #e2f0db;
+      border-radius: 20px;
+    }
+    .scroll-horizontal::-webkit-scrollbar-thumb {
+      background: #7aa06a;
+      border-radius: 20px;
+    }
+
+    /* ---------- 卡片设计 ---------- */
+    .card {
+      scroll-snap-align: start;
+      flex: 0 0 360px;           /* 卡片宽度 稍大一点，展示更多风景 */
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 30px -10px rgba(30, 60, 30, 0.12), 0 6px 14px rgba(0, 20, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(160, 200, 140, 0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 40px -12px rgba(30, 80, 30, 0.2), 0 12px 18px -4px rgba(0, 40, 0, 0.08);
+    }
+
+    .card-img {
+      height: 230px;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20, 40, 10, 0.45), transparent 60%);
+      pointer-events: none;
+    }
+
+    .card-icon {
+      position: relative;
+      z-index: 2;
+      font-size: 2rem;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      line-height: 1;
+    }
+
+    .card-content {
+      padding: 1.6rem 1.8rem 1.8rem 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-category {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #558b4e;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 0.7rem;
+      color: #1b3b1b;
+    }
+
+    .card-desc {
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: #2e4b2e;
+      margin-bottom: 1.6rem;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: #437a3a;
+      font-weight: 500;
+      border-top: 1px solid #d8e8d0;
+      padding-top: 1.1rem;
+      flex-wrap: wrap;
+    }
+
+    .card-meta i {
+      margin-right: 4px;
+    }
+
+    .co2-badge {
+      background: #d9f0d1;
+      color: #1b5e1b;
+      border-radius: 50px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 额外提示 & 底栏 */
+    .scroll-hint-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 0.8rem 1.5rem 0.5rem 1.5rem;
+      color: #4e6e4e;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    .scroll-hint-bar i {
+      color: #3f8f3f;
+    }
+
+    /* 底部信息/氛围装饰 */
+    .footer-note {
+      text-align: center;
+      padding: 1.2rem 2rem 2rem 2rem;
+      font-size: 0.85rem;
+      color: #6a8a6a;
+      border-top: 1px solid rgba(150, 180, 130, 0.25);
+      margin-top: 0.5rem;
+      background: linear-gradient(to right, #eaf3e4, #ddecd4);
+      letter-spacing: 0.02em;
+    }
+
+    /* 响应式 */
+    @media (max-width: 700px) {
+      .header {
+        padding: 0.8rem 1.2rem;
+      }
+      .lang-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+      .scroll-horizontal {
+        padding: 1.2rem 1rem 0.8rem 1rem;
+        gap: 1.2rem;
+      }
+      .card {
+        flex: 0 0 300px;
+      }
+      .card-title {
+        font-size: 1.45rem;
+      }
+      .card-img {
+        height: 190px;
+      }
+      .card-desc {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .card {
+        flex: 0 0 270px;
+      }
+    }
+
+    /* ---------- 风景图库 (8张高质图片，全部自然/骑行主题) ---------- */
+    .img-1 {
+      background-image: url('https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=1470&auto=format&fit=crop');
+      /* 森林骑行小径 */
+    }
+    .img-2 {
+      background-image: url('https://images.unsplash.com/photo-1502744688674-c619d1586c9e?q=80&w=1470&auto=format&fit=crop');
+      /* 自行车与自然 */
+    }
+    .img-3 {
+      background-image: url('https://images.unsplash.com/photo-1528626801095-1a3c6f0e5a8b?q=80&w=1470&auto=format&fit=crop');
+      /* 绿叶与自行车 */
+    }
+    .img-4 {
+      background-image: url('https://images.unsplash.com/photo-1475053426046-3f27f974ffb9?q=80&w=1470&auto=format&fit=crop');
+      /* 山地骑行 */
+    }
+    .img-5 {
+      background-image: url('https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?q=80&w=1470&auto=format&fit=crop');
+      /* 林间小路与自行车 */
+    }
+    .img-6 {
+      background-image: url('https://images.unsplash.com/photo-1529422643029-d4585747aaf2?q=80&w=1470&auto=format&fit=crop');
+      /* 湖泊与山 */
+    }
+    .img-7 {
+      background-image: url('https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?q=80&w=1470&auto=format&fit=crop');
+      /* 骑行者在森林中 */
+    }
+    .img-8 {
+      background-image: url('https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=1470&auto=format&fit=crop');
+      /* 绿色田野与单车 */
+    }
+  </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
+<div class="app">
+  <!-- 头部：语言切换（英文默认激活） -->
+  <header class="header">
+    <div class="lang-switch">
+      <button id="langEn" class="lang-btn active" aria-label="Switch to English">EN</button>
+      <button id="langZh" class="lang-btn" aria-label="切换到中文">中文</button>
+    </div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
-            </div>
+  <!-- 水平滚动卡片区域 —— 8张卡片，丰富风景和介绍 -->
+  <section class="scroll-horizontal" id="scrollContainer">
+    <!-- 卡片 1: 森林骑行 -->
+    <article class="card" 
+             data-en-category="CARBON-FREE COMMUTE" data-zh-category="零碳通勤"
+             data-en-title="Ride through the woods" data-zh-title="林间骑行"
+             data-en-desc="Leave the car behind. Every pedal stroke reduces CO₂ and brings you closer to birdsong and pine scent." 
+             data-zh-desc="放下汽车，每一次踩踏都减少碳排放，让你更靠近鸟鸣与松香。">
+      <div class="card-img img-1">
+        <span class="card-icon">🚲🌳</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-leaf"></i> <span class="cat-text">CARBON-FREE COMMUTE</span></div>
+        <h2 class="card-title">Ride through the woods</h2>
+        <p class="card-desc">Leave the car behind. Every pedal stroke reduces CO₂ and brings you closer to birdsong and pine scent.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -2.1 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-tree"></i> 12 trees saved</span>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
+    <!-- 卡片 2: 湖畔骑行 -->
+    <article class="card" 
+             data-en-category="NATURE THERAPY" data-zh-category="自然疗愈"
+             data-en-title="Pedal to the lake" data-zh-title="骑向湖畔"
+             data-en-desc="Swap traffic for trails. A gentle ride along the water clears your mind and leaves zero trace." 
+             data-zh-desc="用骑行代替车流。沿着水岸轻踩，净化心灵，不留痕迹。">
+      <div class="card-img img-2">
+        <span class="card-icon">🚴‍♀️💧</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-water"></i> <span class="cat-text">NATURE THERAPY</span></div>
+        <h2 class="card-title">Pedal to the lake</h2>
+        <p class="card-desc">Swap traffic for trails. A gentle ride along the water clears your mind and leaves zero trace.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -1.8 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-smile"></i> Pure joy</span>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
+    <!-- 卡片 3: 森林小径 -->
+    <article class="card" 
+             data-en-category="ECO ADVENTURE" data-zh-category="生态探险"
+             data-en-title="Forest single track" data-zh-title="森林小径"
+             data-en-desc="Feel the dirt under your tires. Low-impact cycling keeps trails pristine and wildlife undisturbed." 
+             data-zh-desc="感受轮胎下的泥土。低影响骑行保护小径原始，不惊扰野生动物。">
+      <div class="card-img img-3">
+        <span class="card-icon">🌲🚵</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-mountain"></i> <span class="cat-text">ECO ADVENTURE</span></div>
+        <h2 class="card-title">Forest single track</h2>
+        <p class="card-desc">Feel the dirt under your tires. Low-impact cycling keeps trails pristine and wildlife undisturbed.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -3.2 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-paw"></i> Wildlife safe</span>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- 卡片 4: 城市绿道 -->
+    <article class="card" 
+             data-en-category="GREEN CITY" data-zh-category="绿色城市"
+             data-en-title="Urban greenways" data-zh-title="城市绿道"
+             data-en-desc="Discover hidden green corridors. Biking instead of driving cuts emissions and builds community." 
+             data-zh-desc="探索隐藏的绿色走廊。以骑代驾，减少排放，连接社区。">
+      <div class="card-img img-4">
+        <span class="card-icon">🏙️🌿</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-city"></i> <span class="cat-text">GREEN CITY</span></div>
+        <h2 class="card-title">Urban greenways</h2>
+        <p class="card-desc">Discover hidden green corridors. Biking instead of driving cuts emissions and builds community.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -2.5 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-heart"></i> Health boost</span>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
+    <!-- 卡片 5: 晨雾山路 (新) -->
+    <article class="card" 
+             data-en-category="MOUNTAIN RIDE" data-zh-category="山野骑行"
+             data-en-title="Misty mountain trail" data-zh-title="雾中山径"
+             data-en-desc="Ride above the clouds. A zero-emission climb rewards you with panoramic views and crisp air." 
+             data-zh-desc="骑行于云层之上。零排放的爬升，回报你全景风光与清新空气。">
+      <div class="card-img img-5">
+        <span class="card-icon">⛰️🚵‍♂️</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-cloud-sun"></i> <span class="cat-text">MOUNTAIN RIDE</span></div>
+        <h2 class="card-title">Misty mountain trail</h2>
+        <p class="card-desc">Ride above the clouds. A zero-emission climb rewards you with panoramic views and crisp air.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -4.0 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-camera"></i> Epic views</span>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
+    <!-- 卡片 6: 湖畔日落 (新) -->
+    <article class="card" 
+             data-en-category="SUNSET RIDE" data-zh-category="日落骑行"
+             data-en-title="Golden hour by the lake" data-zh-title="湖畔黄金时刻"
+             data-en-desc="Cycle along the water as the sun sets. A perfect zero-carbon evening escape." 
+             data-zh-desc="夕阳西下，沿湖骑行。完美的零碳傍晚逃离。">
+      <div class="card-img img-6">
+        <span class="card-icon">🌅🚲</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-sun"></i> <span class="cat-text">SUNSET RIDE</span></div>
+        <h2 class="card-title">Golden hour by the lake</h2>
+        <p class="card-desc">Cycle along the water as the sun sets. A perfect zero-carbon evening escape.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -1.5 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-camera-retro"></i> Golden light</span>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
+    <!-- 卡片 7: 森林探险 (新) -->
+    <article class="card" 
+             data-en-category="WILD FOREST" data-zh-category="原始森林"
+             data-en-title="Deep forest adventure" data-zh-title="深入森林"
+             data-en-desc="Venture into ancient woods. Low-impact biking lets you experience nature without leaving a mark." 
+             data-zh-desc="深入古老森林。低影响骑行让你体验自然而不留痕迹。">
+      <div class="card-img img-7">
+        <span class="card-icon">🌳🚵‍♀️</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-tree"></i> <span class="cat-text">WILD FOREST</span></div>
+        <h2 class="card-title">Deep forest adventure</h2>
+        <p class="card-desc">Venture into ancient woods. Low-impact biking lets you experience nature without leaving a mark.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -3.8 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-leaf"></i> Pure nature</span>
         </div>
-    </footer>
+      </div>
+    </article>
 
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
+    <!-- 卡片 8: 田野骑行 (新) -->
+    <article class="card" 
+             data-en-category="COUNTRYSIDE" data-zh-category="田园风光"
+             data-en-title="Fields & fresh air" data-zh-title="田野与清风"
+             data-en-desc="Roll through green fields. A peaceful ride that supports local ecosystems and your health." 
+             data-zh-desc="穿行绿色田野。宁静的骑行，支持本地生态，也有益健康。">
+      <div class="card-img img-8">
+        <span class="card-icon">🌾🚴</span>
+      </div>
+      <div class="card-content">
+        <div class="card-category"><i class="fas fa-seedling"></i> <span class="cat-text">COUNTRYSIDE</span></div>
+        <h2 class="card-title">Fields & fresh air</h2>
+        <p class="card-desc">Roll through green fields. A peaceful ride that supports local ecosystems and your health.</p>
+        <div class="card-meta">
+          <span class="co2-badge"><i class="fas fa-cloud"></i> -2.2 kg CO₂</span>
+          <span class="meta-detail"><i class="fas fa-wind"></i> Fresh air</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 滚动提示栏 -->
+  <div class="scroll-hint-bar">
+    <i class="fas fa-arrows-alt-h"></i>
+    <span id="scrollHint">Scroll left / right to explore →</span>
+    <i class="fas fa-chevron-right"></i>
+  </div>
+
+  <!-- 底栏氛围 -->
+  <div class="footer-note">
+    <i class="fas fa-bicycle"></i> 零碳出行 · 亲近自然 &nbsp;|&nbsp; Zero-carbon travel · Embrace nature
+  </div>
+</div>
+
+<script>
+  (function() {
+    // 获取元素
+    const langEnBtn = document.getElementById('langEn');
+    const langZhBtn = document.getElementById('langZh');
+    const scrollHint = document.getElementById('scrollHint');
+    const cards = document.querySelectorAll('.card');
+
+    // 为每个卡片保存原始英文meta内容 (因为后续要切换)
+    // 由于我们已经在HTML中写了英文meta，可以直接在切换中文时修改，但需要知道索引
+    // 为了干净，我们定义一个映射来更新第二个span (meta-detail)
+
+    // 英文meta详情内容 (默认已存在，但为保险重新定义)
+    const metaEn = [
+      '<i class="fas fa-tree"></i> 12 trees saved',
+      '<i class="fas fa-smile"></i> Pure joy',
+      '<i class="fas fa-paw"></i> Wildlife safe',
+      '<i class="fas fa-heart"></i> Health boost',
+      '<i class="fas fa-camera"></i> Epic views',
+      '<i class="fas fa-camera-retro"></i> Golden light',
+      '<i class="fas fa-leaf"></i> Pure nature',
+      '<i class="fas fa-wind"></i> Fresh air'
+    ];
+
+    const metaZh = [
+      '<i class="fas fa-tree"></i> 保护12棵树',
+      '<i class="fas fa-smile"></i> 纯粹快乐',
+      '<i class="fas fa-paw"></i> 野生动物安全',
+      '<i class="fas fa-heart"></i> 健康加分',
+      '<i class="fas fa-camera"></i> 绝美风景',
+      '<i class="fas fa-camera-retro"></i> 金色光线',
+      '<i class="fas fa-leaf"></i> 纯净自然',
+      '<i class="fas fa-wind"></i> 清风拂面'
+    ];
+
+    // 切换至英文
+    function setEnglish() {
+      langEnBtn.classList.add('active');
+      langZhBtn.classList.remove('active');
+      scrollHint.textContent = 'Scroll left / right to explore →';
+
+      cards.forEach((card, idx) => {
+        // 分类
+        const catSpan = card.querySelector('.cat-text');
+        const enCat = card.getAttribute('data-en-category');
+        if (enCat) catSpan.textContent = enCat;
+
+        // 标题
+        const titleEl = card.querySelector('.card-title');
+        const enTitle = card.getAttribute('data-en-title');
+        if (enTitle) titleEl.textContent = enTitle;
+
+        // 描述
+        const descEl = card.querySelector('.card-desc');
+        const enDesc = card.getAttribute('data-en-desc');
+        if (enDesc) descEl.textContent = enDesc;
+
+        // meta详情 (第二个span)
+        const metaDetail = card.querySelector('.meta-detail');
+        if (metaDetail) {
+          metaDetail.innerHTML = metaEn[idx] || '<i class="fas fa-leaf"></i> Eco friendly';
         }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
+      });
+    }
+
+    // 切换至中文
+    function setChinese() {
+      langZhBtn.classList.add('active');
+      langEnBtn.classList.remove('active');
+      scrollHint.textContent = '← 左右滑动探索更多 →';
+
+      cards.forEach((card, idx) => {
+        const catSpan = card.querySelector('.cat-text');
+        const zhCat = card.getAttribute('data-zh-category');
+        if (zhCat) catSpan.textContent = zhCat;
+
+        const titleEl = card.querySelector('.card-title');
+        const zhTitle = card.getAttribute('data-zh-title');
+        if (zhTitle) titleEl.textContent = zhTitle;
+
+        const descEl = card.querySelector('.card-desc');
+        const zhDesc = card.getAttribute('data-zh-desc');
+        if (zhDesc) descEl.textContent = zhDesc;
+
+        const metaDetail = card.querySelector('.meta-detail');
+        if (metaDetail) {
+          metaDetail.innerHTML = metaZh[idx] || '<i class="fas fa-leaf"></i> 环保骑行';
         }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
+      });
+    }
+
+    // 初始化英文（页面默认英文，但确保状态一致）
+    setEnglish();
+
+    // 绑定事件
+    langEnBtn.addEventListener('click', setEnglish);
+    langZhBtn.addEventListener('click', setChinese);
+
+    // 可选：点击滚动提示平滑滚动到末尾？不必须，保留原生滚动
+  })();
+</script>
 </body>
 </html>
